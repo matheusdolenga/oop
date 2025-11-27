@@ -80,17 +80,3 @@ P2 = Professor("Izaque Esteves", "izaque.esteves@email.com", "Educacional", "Bio
 
 R1 = Pesquisador("João Paulo Orlando", "joao.orlando@email.com", "Pesquisa Acadêmica", "Computação Quântica", 30000.00, "Doutorado")
 R2 = Pesquisador("Gabriel Cândido", "gabriel.candido@email.com", "Pesquisa Acadêmica", "Matemática Aplicada", 5000.00, "Graduado")
-
-def main():
-    E1.exibir_dados()
-    E2.exibir_dados()    
-    S1.exibir_dados()
-    S2.exibir_dados()    
-    P1.exibir_dados()
-    P2.exibir_dados()    
-    R1.exibir_dados()
-    R2.exibir_dados()
-    print("\nHELLO WORLD!")
-
-if __name__ == "__main__":
-    main()
