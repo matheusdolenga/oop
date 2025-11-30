@@ -1,19 +1,27 @@
 import sqlite3
-import classes
+import new_classes
 import database
 import time
 
+
+conn = sqlite3.connect('universidade.db')
+cursor = conn.cursor()
+
 def create():
-    pass
+    cursor.execute("INSERT INTO membro_univerisade (nome, email, matricula) VALUES (?, ?, ?)", (new_classes.nome, new_classes.email, new_classes.matricula))
+    conn.commit()
 
 def read():
-    pass
+    cursor.execute("SELECT * FROM membro_univerisade WHERE matricula = ?", (new_classes.matricula,))
+    result = cursor.fetchone()
 
 def update():
-    pass
+    cursor.execute("UPDATE membro_univerisade SET nome = ?, email = ? WHERE matricula = ?", (new_classes.nome, new_classes.email, new_classes.matricula))
+    conn.commit()
 
 def delete():
-    pass
+    cursor.execute("DELETE FROM membro_univerisade WHERE matricula = ?", (new_classes.matricula,))
+    conn.commit()
 
 def interface():
     print("Bem-vindo ao sistema de gerenciamento da universidade!")
@@ -22,12 +30,16 @@ def interface():
     match input("Digite o número da operação desejada: "):
         case '1':
                 print("Cadastro de novo membro selecionado.")
+                create()
         case '2':
                 print("Visualização de dados selecionada.")
+                read()
         case '3':
                 print("Atualização de dados selecionada.")
+                update()
         case '4':
                 print("Deleção de membro selecionada.")
+                delete()
         case '5':
                 print("Encerrando o programa")
                 time.sleep(2)
@@ -35,12 +47,9 @@ def interface():
         case _:
             print("Operação inválida. Por favor, tente novamente.")
 
-
 def main():
-    # inicia = sqlite3.connect('universidade.db')
-    # cursor = inicia.cursor()
-
-    interface()
+    while True:
+        interface()
 
 if __name__ == "__main__":
     main()
