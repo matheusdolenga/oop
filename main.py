@@ -1,5 +1,4 @@
 import sqlite3
-
 import database
 from new_classes import membro_universidade
 
