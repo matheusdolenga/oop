@@ -49,4 +49,9 @@ class professor(membro_universidade):
         super().exibir_dados()
         print("Departamento:", self.departamento)
         print("Titulacao:", self.titulacao)
-        print("Salario:", self.salario)
+        try:
+            valor = float(self.salario)
+            brl = f"{valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+        except (ValueError, TypeError):
+            brl = str(self.salario)
+        print("Salario: R$ " + brl)
