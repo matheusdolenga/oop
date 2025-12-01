@@ -1,5 +1,14 @@
-from flask import Flask, render_template_string, request, redirect
+import sys
+import pathlib
 import sqlite3
+
+from flask import Flask, render_template_string, request, redirect
+
+# Garante que o Python ache os arquivos do projeto mesmo se este arquivo estiver em outra pasta
+BASE_DIR = pathlib.Path(__file__).resolve().parent
+PROJECT_DIR = BASE_DIR / "oop - Copia"
+if PROJECT_DIR.exists():
+    sys.path.insert(0, str(PROJECT_DIR))
 
 import database
 
