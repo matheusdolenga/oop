@@ -30,19 +30,19 @@ def interface():
     match input("Digite o número da operação desejada: "):
         case '1':
                 print("Cadastro de novo membro selecionado.")
-                print('isira primeiro o nome, depois o email, depois a matrícula:')
+                print('Insira primeiro o nome, depois o email, depois a matrícula:')
                 create()
         case '2':
                 print("Visualização de dados selecionada.")
-                print('isira a matrícula do membro:')
+                print('Insira a matrícula do membro:')
                 read()
         case '3':
                 print("Atualização de dados selecionada.")
-                print('isira primeiro o nome, depois o email, depois a matrícula:')
+                print('Insira primeiro o nome, depois o email, depois a matrícula:')
                 update()
         case '4':
                 print("Deleção de membro selecionada.")
-                print('isira a matrícula do membro:')
+                print('Insira a matrícula do membro:')
                 delete()
         case '5':
                 print("Encerrando o programa")
