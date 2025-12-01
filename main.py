@@ -1,58 +1,85 @@
 import sqlite3
-from new_classes import membro_universidade
+
 import database
-import time
+from new_classes import membro_universidade
 
 
-conn = sqlite3.connect('universidade.db')
-cursor = conn.cursor()
+def menu():
+    print("Sistema simples de membros da universidade")
+    print("Escolha uma opcao e siga as instrucoes.")
 
-def create():
-    cursor.execute("INSERT INTO membro_univerisade (nome, email, matricula) VALUES (?, ?, ?)", (membro_universidade.nome,membro_universidade.email, membro_universidade.matricula))
-    conn.commit()
+    while True:
+        print("\n1 - Cadastrar membro")
+        print("2 - Ver um membro")
+        print("3 - Atualizar membro")
+        print("4 - Deletar membro")
+        print("5 - Sair")
 
-def read():
-    cursor.execute("SELECT * FROM membro_univerisade WHERE matricula = ?", (membro_universidade.matricula,))
-    result = cursor.fetchone()
+        opcao = input("Opcao: ").strip()
 
-def update():
-    cursor.execute("UPDATE membro_univerisade SET nome = ?, email = ? WHERE matricula = ?", (membro_universidade.nome, membro_universidade.email, membro_universidade.matricula))
-    conn.commit()
+        if opcao == "1":
+            nome = input("Nome: ").strip()
+            email = input("Email: ").strip()
+            matricula = input("Matricula: ").strip()
+            if not nome or not email or not matricula:
+                print("Preencha todos os campos.")
+                continue
+            try:
+                database.criar_membro(nome, email, matricula)
+                print("Membro salvo com sucesso.")
+            except sqlite3.IntegrityError:
+                print("Ja existe um membro com essa matricula.")
 
-def delete():
-    cursor.execute("DELETE FROM membro_univerisade WHERE matricula = ?", (membro_universidade.matricula,))
-    conn.commit()
+        elif opcao == "2":
+            matricula = input("Matricula do membro: ").strip()
+            if not matricula:
+                print("Matricula nao pode ser vazia.")
+                continue
+            dados = database.buscar_membro(matricula)
+            if not dados:
+                print("Nenhum membro encontrado.")
+            else:
+                membro = membro_universidade(*dados)
+                membro.exibir_dados()
 
-def interface():
-    print("Bem-vindo ao sistema de gerenciamento da universidade!")
-    print("Selecione a operação desejada:\n 1. Cadastrar novo membro\n 2. Visualizar dados de um membro\n 3. Atualizar dados de um membro\n 4. Deletar um membro\n 5. Sair")
+        elif opcao == "3":
+            matricula = input("Matricula do membro: ").strip()
+            if not matricula:
+                print("Matricula nao pode ser vazia.")
+                continue
+            atual = database.buscar_membro(matricula)
+            if not atual:
+                print("Nenhum membro encontrado.")
+                continue
+            nome = input("Novo nome: ").strip()
+            email = input("Novo email: ").strip()
+            if not nome or not email:
+                print("Nome e email nao podem ser vazios.")
+                continue
+            linhas = database.atualizar_membro(nome, email, matricula)
+            if linhas:
+                print("Dados atualizados.")
+            else:
+                print("Nada foi atualizado.")
 
-    match input("Digite o número da operação desejada: "):
-        case '1':
-                print("Cadastro de novo membro selecionado.")
-                print('Insira primeiro o nome, depois o email, depois a matrícula:')
-                create()
-        case '2':
-                print("Visualização de dados selecionada.")
-                print('Insira a matrícula do membro:')
-                read()
-        case '3':
-                print("Atualização de dados selecionada.")
-                print('Insira primeiro o nome, depois o email, depois a matrícula:')
-                update()
-        case '4':
-                print("Deleção de membro selecionada.")
-                print('Insira a matrícula do membro:')
-                delete()
-        case '5':
-                print("Encerrando o programa")
-                time.sleep(2)
-                exit()
-        case _:
-            print("Operação inválida. Por favor, tente novamente.")
+        elif opcao == "4":
+            matricula = input("Matricula do membro: ").strip()
+            if not matricula:
+                print("Matricula nao pode ser vazia.")
+                continue
+            linhas = database.deletar_membro(matricula)
+            if linhas:
+                print("Membro removido.")
+            else:
+                print("Nenhum membro encontrado.")
 
-def main():
-    interface()
+        elif opcao == "5":
+            print("Saindo...")
+            break
+
+        else:
+            print("Opcao invalida, tente de novo.")
+
 
 if __name__ == "__main__":
-    main()
+    menu()

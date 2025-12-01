@@ -5,7 +5,11 @@ class membro_universidade:
         self.matricula = matricula
 
     def exibir_dados(self):
-        print(f"\nNome: {self.nome}\nEmail: {self.email}\nMatrícula: {self.matricula}")
+        print("\nDados do membro")
+        print("Nome:", self.nome)
+        print("Email:", self.email)
+        print("Matricula:", self.matricula)
+
 
 class disciplina:
     def __init__(self, codigo, descricao, periodo, carga_horaria, nome):
@@ -16,17 +20,22 @@ class disciplina:
         self.nome = nome
 
     def exibir_dados(self):
-        print(f"\nNome da Disciplina: {self.nome}\nCódigo: {self.codigo}\nDescrição: {self.descricao}\nPeríodo: {self.periodo}\nCarga Horária: {self.carga_horaria} horas")
+        print("\nDados da disciplina")
+        print("Nome:", self.nome)
+        print("Codigo:", self.codigo)
+        print("Descricao:", self.descricao)
+        print("Periodo:", self.periodo)
+        print("Carga horaria:", self.carga_horaria)
+
 
 class aluno(membro_universidade):
     def __init__(self, nome, email, matricula, coeficiente_rendimento):
         super().__init__(nome, email, matricula)
-        self.matricula = matricula
         self.coeficiente_rendimento = coeficiente_rendimento
 
     def exibir_dados(self):
         super().exibir_dados()
-        print(f"Matrícula: {self.matricula}")
+        print("Coeficiente de rendimento:", self.coeficiente_rendimento)
 
 
 class professor(membro_universidade):
@@ -38,4 +47,6 @@ class professor(membro_universidade):
 
     def exibir_dados(self):
         super().exibir_dados()
-        print(f"Departamento: {self.departamento}\nTitulação: {self.titulacao}\nSalário: {self.salario}")
+        print("Departamento:", self.departamento)
+        print("Titulacao:", self.titulacao)
+        print("Salario:", self.salario)

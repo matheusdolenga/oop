@@ -1,11 +1,51 @@
 import sqlite3
-conn = sqlite3.connect('universidade.db')
+
+# Conexao unica e simples
+conn = sqlite3.connect("universidade.db")
 cursor = conn.cursor()
 
-cursor.execute("CREATE TABLE IF NOT EXISTS membro_universidade (nome VARCHAR(100), email VARCHAR(100), matricula VARCHAR(20) PRIMARY KEY)")
-cursor.execute("CREATE TABLE IF NOT EXISTS aluno (nome VARCHAR(100), email VARCHAR(100), matricula VARCHAR(20) PRIMARY KEY, coeficiente_rendimento FLOAT, FOREIGN KEY(matricula) REFERENCES membro_universidade(matricula))")
-cursor.execute("CREATE TABLE IF NOT EXISTS professor (nome VARCHAR(100), email VARCHAR(100), matricula VARCHAR(20) PRIMARY KEY, departamento VARCHAR(100), titulacao VARCHAR(50), salario FLOAT, FOREIGN KEY(matricula) REFERENCES membro_universidade(matricula))")
-cursor.execute("CREATE TABLE IF NOT EXISTS disciplina (codigo VARCHAR(20) PRIMARY KEY, descricao TEXT, periodo VARCHAR(20), carga_horaria INTEGER, nome VARCHAR(100))")
-
+# Garante que a tabela exista
+cursor.execute(
+    """
+    CREATE TABLE IF NOT EXISTS membro_univerisade (
+        nome TEXT,
+        email TEXT,
+        matricula TEXT PRIMARY KEY
+    )
+    """
+)
 conn.commit()
-conn.close()
+
+
+def criar_membro(nome, email, matricula):
+    cursor.execute(
+        "INSERT INTO membro_univerisade (nome, email, matricula) VALUES (?, ?, ?)",
+        (nome, email, matricula),
+    )
+    conn.commit()
+
+
+def buscar_membro(matricula):
+    cursor.execute(
+        "SELECT nome, email, matricula FROM membro_univerisade WHERE matricula = ?",
+        (matricula,),
+    )
+    return cursor.fetchone()
+
+
+def atualizar_membro(nome, email, matricula):
+    cursor.execute(
+        "UPDATE membro_univerisade SET nome = ?, email = ? WHERE matricula = ?",
+        (nome, email, matricula),
+    )
+    conn.commit()
+    return cursor.rowcount
+
+
+def deletar_membro(matricula):
+    cursor.execute(
+        "DELETE FROM membro_univerisade WHERE matricula = ?",
+        (matricula,),
+    )
+    conn.commit()
+    return cursor.rowcount
