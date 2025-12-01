@@ -3,8 +3,9 @@ import database
 from new_classes import membro_universidade
 
 
+
 def menu():
-    print("Sistema simples de membros da universidade")
+    print("Bem-Vindo ao sistema de integrantes do IFPR!!")
     print("Escolha uma opcao e siga as instrucoes.")
 
     while True:
