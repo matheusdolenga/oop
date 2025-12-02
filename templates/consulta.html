@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Registros</title>
+    <style>
+        :root {
+            --azul-claro: #E0F7FA;
+            --azul-medio: #03A9F4;
+            --azul-escuro: #0288D1;
+            --cor-texto: #333333;
+            --cor-fundo-card: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--azul-claro);
+            color: var(--cor-texto);
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: var(--cor-fundo-card);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+
+        h1 {
+            color: var(--azul-escuro);
+            text-align: center;
+            border-bottom: 2px solid var(--azul-medio);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        /* Estilo dos Botões (Mini) */
+        .btn {
+            display: inline-block;
+            padding: 8px 16px; 
+            margin: 5px 0;
+            font-size: 14px; 
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border: 1px solid var(--azul-escuro);
+            border-radius: 6px; 
+            background-color: var(--azul-medio);
+            color: white;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            width: 100%; /* Ocupa a largura total no formulário */
+            box-sizing: border-box;
+        }
+
+        .btn:hover {
+            background-color: var(--azul-escuro);
+            border-color: var(--azul-escuro);
+        }
+
+        /* Estilo para Botão de Voltar */
+        .btn-back {
+            background-color: #607D8B; /* Cinza/Azul sutil */
+            border-color: #455A64;
+            margin-top: 20px;
+        }
+
+        .btn-back:hover {
+            background-color: #455A64;
+        }
+
+        /* Estilo do Formulário e Inputs */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--azul-escuro);
+        }
+
+        .input-text, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #B0BEC5;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-text:focus, select:focus {
+            border-color: var(--azul-medio);
+            outline: none;
+        }
+
+        /* Estilo para exibir o resultado da consulta */
+        .result-box {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px dashed var(--azul-medio);
+            background-color: var(--azul-claro);
+            border-radius: 8px;
+        }
+
+        .result-item {
+            margin-bottom: 10px;
+        }
+
+        .result-label {
+            font-weight: bold;
+            color: var(--azul-escuro);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Consultar Registro</h1>
+        
+        <form action="/Consulta" method="GET">
+            <div class="form-group">
+                <label for="tipo_registro">Tipo de Registro:</label>
+                <select id="tipo_registro" name="tipo" required>
+                    <option value="membro">Membro (Matrícula)</option>
+                    <option value="aluno">Aluno (Matrícula)</option>
+                    <option value="professor">Professor (Matrícula)</option>
+                    <option value="disciplina">Disciplina (Código)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="identificador">Matrícula ou Código:</label>
+                <input type="text" id="identificador" name="id" class="input-text" required placeholder="Ex: 12345 ou POO001">
+            </div>
+
+            <button type="submit" class="btn">Buscar</button>
+        </form>
+
+        <!-- Bloco para simular a exibição do resultado (seria preenchido pelo Flask) -->
+        <div class="result-box">
+            <h2 style="color: var(--azul-medio); margin-top: 0; font-size: 1.2em;">Resultado da Consulta</h2>
+            <div id="resultado_aqui">
+                <p>Nenhum registro buscado ainda. Insira o identificador e clique em "Buscar".</p>
+                <!-- Exemplo de como o Flask exibiria um resultado:
+                <div class="result-item"><span class="result-label">Nome:</span> João Victor</div>
+                <div class="result-item"><span class="result-label">Matrícula:</span> 12345</div>
+                <div class="result-item"><span class="result-label">Email:</span> joao@ifpr.edu.br</div>
+                <div class="result-item"><span class="result-label">CR:</span> 0.85</div>
+                -->
+            </div>
+        </div>
+
+        <a href="/" class="btn btn-back">Voltar ao Menu Principal</a>
+    </div>
+</body>
+</html>

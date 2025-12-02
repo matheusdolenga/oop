@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deletar Registro</title>
+    <style>
+        :root {
+            --azul-claro: #E0F7FA;
+            --azul-medio: #03A9F4;
+            --azul-escuro: #0288D1;
+            --cor-texto: #333333;
+            --cor-fundo-card: #FFFFFF;
+            --cor-alerta: #FF5252; /* Vermelho para o botão de deletar */
+            --cor-alerta-hover: #D32F2F;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--azul-claro);
+            color: var(--cor-texto);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: var(--cor-fundo-card);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+
+        h1 {
+            color: var(--cor-alerta);
+            text-align: center;
+            border-bottom: 2px solid var(--cor-alerta);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        /* Estilo dos Botões (Mini) */
+        .btn {
+            display: inline-block;
+            padding: 8px 16px; 
+            margin: 5px 0;
+            font-size: 14px; 
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 6px; 
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            width: 100%; 
+            box-sizing: border-box;
+        }
+
+        /* Botão Deletar (Destaque Vermelho) */
+        .btn-delete {
+            background-color: var(--cor-alerta);
+            border: 1px solid var(--cor-alerta-hover);
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background-color: var(--cor-alerta-hover);
+            border-color: var(--cor-alerta-hover);
+        }
+
+        /* Botão de Voltar (Azul) */
+        .btn-back {
+            background-color: var(--azul-medio);
+            border: 1px solid var(--azul-escuro);
+            color: white;
+            margin-top: 20px;
+        }
+
+        .btn-back:hover {
+            background-color: var(--azul-escuro);
+            border-color: var(--azul-escuro);
+        }
+
+        /* Estilo do Formulário e Inputs */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--cor-texto);
+        }
+
+        .input-text, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #B0BEC5;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-text:focus, select:focus {
+            border-color: var(--azul-medio);
+            outline: none;
+        }
+
+        /* Aviso de segurança */
+        .warning-box {
+            background-color: #FFCDD2;
+            color: #C62828;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border: 1px solid #EF9A9A;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Deletar Registro</h1>
+        
+        <div class="warning-box">
+            ATENÇÃO: A remoção de registros é uma ação permanente e não pode ser desfeita.
+        </div>
+
+        <form action="/Deletar" method="POST">
+            <div class="form-group">
+                <label for="tipo_registro">Tipo de Registro a Deletar:</label>
+                <select id="tipo_registro" name="tipo" required>
+                    <option value="membro">Membro (Matrícula)</option>
+                    <option value="aluno">Aluno (Matrícula)</option>
+                    <option value="professor">Professor (Matrícula)</option>
+                    <option value="disciplina">Disciplina (Código)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="identificador">Matrícula ou Código do Registro:</label>
+                <input type="text" id="identificador" name="id" class="input-text" required placeholder="Insira o identificador exato para deletar">
+            </div>
+
+            <button type="submit" class="btn btn-delete">DELETAR PERMANENTEMENTE</button>
+        </form>
+
+        <a href="/" class="btn btn-back">Voltar ao Menu Principal</a>
+    </div>
+</body>
+</html>
