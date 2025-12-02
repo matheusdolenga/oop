@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema IFPR - Gerenciamento de Membros e Disciplinas</title>
+    <style>
+        :root {
+            --azul-claro: #E0F7FA;
+            --azul-medio: #03A9F4;
+            --azul-escuro: #0288D1;
+            --cor-texto: #333333;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--azul-claro);
+            color: var(--cor-texto);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #FFFFFF;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+
+        h1 {
+            color: var(--azul-escuro);
+            text-align: center;
+            border-bottom: 2px solid var(--azul-medio);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            /* Diminuído o padding vertical (8px) e horizontal (16px) */
+            padding: 8px 16px; 
+            margin: 5px;
+            /* Diminuído o tamanho da fonte */
+            font-size: 14px; 
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border: 1px solid var(--azul-escuro);
+            /* Borda arredondada um pouco menor */
+            border-radius: 6px; 
+            background-color: var(--azul-medio);
+            color: white;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--azul-escuro);
+            border-color: var(--azul-escuro);
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Reduzido o espaçamento entre os botões */
+        }
+        
+        .menu a {
+            flex: 1;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bem-Vindo ao sistema de integrantes do IFPR!!</h1>
+        <p style="text-align: center; font-size: 1.1em;">
+            Escolha uma das opções abaixo para gerenciar os dados da universidade:
+        </p>
+
+        <div class="menu">
+            <a href="/membros" class="btn">Membros (Geral)</a>
+            <a href="/alunos" class="btn">Alunos</a>
+            <a href="/professores" class="btn">Professores</a>
+            <a href="/disciplinas" class="btn">Disciplinas</a>
+        </div>
+
+        <p style="text-align: center; margin-top: 20px;">
+            <a href="/sair" class="btn" style="background-color: #78909C; border-color: #546E7A;">5 - Sair</a>
+        </p>
+    </div>
+</body>
+</html>
