@@ -8,11 +8,11 @@ def template():
 
 @app.route('/Consulta')
 def aluno():
-    pass
+    return render_template('consulta.html')
 
 @app.route('/Deletar')
 def deletar():
-    pass
+    return render_template('deletar.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
