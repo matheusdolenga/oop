@@ -1,3 +1,4 @@
+# O João é um jovem moggado e nunca sobra nada para ele, pois ele é beta
 import sqlite3
 import database
 from new_classes import aluno, disciplina, membro_universidade, professor
