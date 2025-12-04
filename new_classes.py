@@ -73,7 +73,6 @@ professor_exemplo = professor(
     8500.75
 )
 
-
 print("--- Testando as Instâncias ---")
 membro_generico.exibir_dados()
 disciplina_poo.exibir_dados()
