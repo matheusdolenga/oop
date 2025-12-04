@@ -55,3 +55,4 @@ class professor(membro_universidade):
         except (ValueError, TypeError):
             brl = str(self.salario)
         print("Salario: R$ " + brl)
+        # Teste commit branch
