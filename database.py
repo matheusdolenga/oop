@@ -159,3 +159,4 @@ def deletar_disciplina(codigo):
     c.execute("DELETE FROM disciplina WHERE codigo = ?", (codigo,))
     c.commit()
     c.close()
+        # Teste commit branch
