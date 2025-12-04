@@ -27,12 +27,17 @@ def menu_membros():
                 membro_universidade(nome, email, matricula).exibir_dados()
 
         elif opcao == "3":
-            database.atualizar_membro(
-                input("Novo nome: "),
-                input("Novo email: "),
-                input("Matricula: "),
-            )
-            print("Dados atualizados.")
+            matricula = input("Matricula: ")
+            existente = database.buscar_membro(matricula)
+            if not existente:
+                print("Matricula nao encontrada, nada foi atualizado.")
+            else:
+                database.atualizar_membro(
+                    input("Novo nome: "),
+                    input("Novo email: "),
+                    matricula,
+                )
+                print("Dados atualizados.")
 
         elif opcao == "4":
             database.deletar_membro(input("Matricula: "))
@@ -67,13 +72,18 @@ def menu_alunos():
 
         elif opcao == "3":
             try:
-                database.atualizar_aluno(
-                    input("Novo nome: "),
-                    input("Novo email: "),
-                    float(input("Novo coeficiente: ")),
-                    input("Matricula: "),
-                )
-                print("Aluno atualizado.")
+                matricula = input("Matricula: ")
+                existente = database.buscar_aluno(matricula)
+                if not existente:
+                    print("Matricula nao encontrada, nada foi atualizado.")
+                else:
+                    database.atualizar_aluno(
+                        input("Novo nome: "),
+                        input("Novo email: "),
+                        float(input("Novo coeficiente: ")),
+                        matricula,
+                    )
+                    print("Aluno atualizado.")
             except Exception:
                 print("Erro ao atualizar.")
 
@@ -112,15 +122,20 @@ def menu_professores():
 
         elif opcao == "3":
             try:
-                database.atualizar_professor(
-                    input("Novo nome: "),
-                    input("Novo email: "),
-                    input("Novo departamento: "),
-                    input("Nova titulacao: "),
-                    float(input("Novo salario: ")),
-                    input("Matricula: "),
-                )
-                print("Professor atualizado.")
+                matricula = input("Matricula: ")
+                existente = database.buscar_professor(matricula)
+                if not existente:
+                    print("Matricula nao encontrada, nada foi atualizado.")
+                else:
+                    database.atualizar_professor(
+                        input("Novo nome: "),
+                        input("Novo email: "),
+                        input("Novo departamento: "),
+                        input("Nova titulacao: "),
+                        float(input("Novo salario: ")),
+                        matricula,
+                    )
+                    print("Professor atualizado.")
             except Exception:
                 print("Erro ao atualizar.")
 
@@ -160,14 +175,19 @@ def menu_disciplinas():
 
         elif opcao == "3":
             try:
-                database.atualizar_disciplina(
-                    input("Codigo: "),
-                    input("Nova descricao: "),
-                    input("Novo periodo: "),
-                    int(input("Nova carga horaria: ")),
-                    input("Novo nome: "),
-                )
-                print("Disciplina atualizada.")
+                codigo = input("Codigo: ")
+                existente = database.buscar_disciplina(codigo)
+                if not existente:
+                    print("Codigo nao encontrado, nada foi atualizado.")
+                else:
+                    database.atualizar_disciplina(
+                        codigo,
+                        input("Nova descricao: "),
+                        input("Novo periodo: "),
+                        int(input("Nova carga horaria: ")),
+                        input("Novo nome: "),
+                    )
+                    print("Disciplina atualizada.")
             except Exception:
                 print("Erro ao atualizar.")
 
