@@ -15,15 +15,16 @@ def menu_membros():
                     input("Matricula: "),
                 )
                 print("Membro salvo.")
-            except Exception as e:
-                print("Erro ao salvar:", e)
+            except Exception:
+                print("Erro ao salvar.")
 
         elif opcao == "2":
             dados = database.buscar_membro(input("Matricula: "))
-            if dados:
-                membro_universidade(*dados).exibir_dados()
-            else:
+            if not dados:
                 print("Nao encontrado.")
+            else:
+                nome, email, matricula = dados
+                membro_universidade(nome, email, matricula).exibir_dados()
 
         elif opcao == "3":
             database.atualizar_membro(
@@ -53,15 +54,16 @@ def menu_alunos():
                     float(input("Coeficiente de rendimento: ")),
                 )
                 print("Aluno salvo.")
-            except Exception as e:
-                print("Erro ao salvar:", e)
+            except Exception:
+                print("Erro ao salvar.")
 
         elif opcao == "2":
             dados = database.buscar_aluno(input("Matricula: "))
-            if dados:
-                aluno(*dados).exibir_dados()
-            else:
+            if not dados:
                 print("Nao encontrado.")
+            else:
+                nome, email, matricula, coeficiente_rendimento = dados
+                aluno(nome, email, matricula, coeficiente_rendimento).exibir_dados()
 
         elif opcao == "3":
             try:
@@ -72,8 +74,8 @@ def menu_alunos():
                     input("Matricula: "),
                 )
                 print("Aluno atualizado.")
-            except Exception as e:
-                print("Erro ao atualizar:", e)
+            except Exception:
+                print("Erro ao atualizar.")
 
         elif opcao == "4":
             database.deletar_aluno(input("Matricula: "))
@@ -97,15 +99,16 @@ def menu_professores():
                     float(input("Salario: ")),
                 )
                 print("Professor salvo.")
-            except Exception as e:
-                print("Erro ao salvar:", e)
+            except Exception:
+                print("Erro ao salvar.")
 
         elif opcao == "2":
             dados = database.buscar_professor(input("Matricula: "))
-            if dados:
-                professor(*dados).exibir_dados()
-            else:
+            if not dados:
                 print("Nao encontrado.")
+            else:
+                nome, email, matricula, departamento, titulacao, salario = dados
+                professor(nome, email, matricula, departamento, titulacao, salario).exibir_dados()
 
         elif opcao == "3":
             try:
@@ -118,8 +121,8 @@ def menu_professores():
                     input("Matricula: "),
                 )
                 print("Professor atualizado.")
-            except Exception as e:
-                print("Erro ao atualizar:", e)
+            except Exception:
+                print("Erro ao atualizar.")
 
         elif opcao == "4":
             database.deletar_professor(input("Matricula: "))
@@ -144,15 +147,16 @@ def menu_disciplinas():
                     input("Nome da disciplina: "),
                 )
                 print("Disciplina salva.")
-            except Exception as e:
-                print("Erro ao salvar:", e)
+            except Exception:
+                print("Erro ao salvar.")
 
         elif opcao == "2":
             dados = database.buscar_disciplina(input("Codigo: "))
-            if dados:
-                disciplina(*dados).exibir_dados()
-            else:
+            if not dados:
                 print("Nao encontrada.")
+            else:
+                codigo, descricao, periodo, carga_horaria, nome = dados
+                disciplina(codigo, descricao, periodo, carga_horaria, nome).exibir_dados()
 
         elif opcao == "3":
             try:
@@ -164,8 +168,8 @@ def menu_disciplinas():
                     input("Novo nome: "),
                 )
                 print("Disciplina atualizada.")
-            except Exception as e:
-                print("Erro ao atualizar:", e)
+            except Exception:
+                print("Erro ao atualizar.")
 
         elif opcao == "4":
             database.deletar_disciplina(input("Codigo: "))
