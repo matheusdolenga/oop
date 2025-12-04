@@ -1,354 +1,178 @@
-# O João é um jovem moggado e nunca sobra nada para ele, pois ele é beta
-import sqlite3
 import database
 from new_classes import aluno, disciplina, membro_universidade, professor
 
 
 def menu_membros():
     while True:
-        print("\n1 - Cadastrar membro")
-        print("2 - Ver um membro")
-        print("3 - Atualizar membro")
-        print("4 - Deletar membro")
-        print("5 - Voltar")
-        opcao = input("Opcao: ").strip()
+        print("\n1 - Cadastrar membro\n2 - Ver um membro\n3 - Atualizar membro\n4 - Deletar membro\n5 - Voltar")
+        opcao = input("Opcao: ")
 
         if opcao == "1":
-            nome = input("Nome: ").strip()
-            email = input("Email: ").strip()
-            matricula = input("Matricula: ").strip()
-            if not nome or not email or not matricula:
-                print("Preencha todos os campos.")
-                continue
             try:
-                database.criar_membro(nome, email, matricula)
-                print("Membro salvo com sucesso.")
-            except sqlite3.IntegrityError:
-                print("Ja existe um membro com essa matricula.")
+                database.criar_membro(
+                    input("Nome: "),
+                    input("Email: "),
+                    input("Matricula: "),
+                )
+                print("Membro salvo.")
+            except Exception as e:
+                print("Erro ao salvar:", e)
 
         elif opcao == "2":
-            matricula = input("Matricula do membro: ").strip()
-            if not matricula:
-                print("Matricula nao pode ser vazia.")
-                continue
-            dados = database.buscar_membro(matricula)
-            if not dados:
-                print("Nenhum membro encontrado.")
+            dados = database.buscar_membro(input("Matricula: "))
+            if dados:
+                membro_universidade(*dados).exibir_dados()
             else:
-                membro = membro_universidade(*dados)
-                membro.exibir_dados()
+                print("Nao encontrado.")
 
         elif opcao == "3":
-            matricula = input("Matricula do membro: ").strip()
-            if not matricula:
-                print("Matricula nao pode ser vazia.")
-                continue
-            atual = database.buscar_membro(matricula)
-            if not atual:
-                print("Nenhum membro encontrado.")
-                continue
-            nome = input("Novo nome: ").strip()
-            email = input("Novo email: ").strip()
-            if not nome or not email:
-                print("Nome e email nao podem ser vazios.")
-                continue
-            linhas = database.atualizar_membro(nome, email, matricula)
-            if linhas:
-                print("Dados atualizados.")
-            else:
-                print("Nada foi atualizado.")
+            database.atualizar_membro(
+                input("Novo nome: "),
+                input("Novo email: "),
+                input("Matricula: "),
+            )
+            print("Dados atualizados.")
 
         elif opcao == "4":
-            matricula = input("Matricula do membro: ").strip()
-            if not matricula:
-                print("Matricula nao pode ser vazia.")
-                continue
-            linhas = database.deletar_membro(matricula)
-            if linhas:
-                print("Membro removido.")
-            else:
-                print("Nenhum membro encontrado.")
+            database.deletar_membro(input("Matricula: "))
+            print("Membro removido.")
 
         elif opcao == "5":
             break
-        else:
-            print("Opcao invalida, tente de novo.")
 
 
 def menu_alunos():
     while True:
-        print("\n1 - Cadastrar aluno")
-        print("2 - Ver um aluno")
-        print("3 - Atualizar aluno")
-        print("4 - Deletar aluno")
-        print("5 - Voltar")
-        opcao = input("Opcao: ").strip()
+        print("\n1 - Cadastrar aluno\n2 - Ver um aluno\n3 - Atualizar aluno\n4 - Deletar aluno\n5 - Voltar")
+        opcao = input("Opcao: ")
 
         if opcao == "1":
-            matricula = input("Matricula: ").strip()
-            coef = input("Coeficiente de rendimento: ").strip()
-            if not matricula or not coef:
-                print("Preencha todos os campos.")
-                continue
             try:
-                coef_valor = float(coef)
-            except ValueError:
-                print("Coeficiente deve ser numerico.")
-                continue
-            try:
-                if not database.buscar_membro(matricula):
-                    print("Cadastre primeiro o membro com essa matricula.")
-                    continue
-                database.criar_aluno(matricula, coef_valor)
-                print("Aluno salvo com sucesso (dados herdados do membro).")
-            except sqlite3.IntegrityError:
-                print("Ja existe um aluno com essa matricula ou membro nao existe.")
+                database.criar_aluno(
+                    input("Matricula: "),
+                    float(input("Coeficiente de rendimento: ")),
+                )
+                print("Aluno salvo.")
+            except Exception as e:
+                print("Erro ao salvar:", e)
 
         elif opcao == "2":
-            matricula = input("Matricula do aluno: ").strip()
-            if not matricula:
-                print("Matricula nao pode ser vazia.")
-                continue
-            dados = database.buscar_aluno(matricula)
-            if not dados:
-                print("Nenhum aluno encontrado.")
+            dados = database.buscar_aluno(input("Matricula: "))
+            if dados:
+                aluno(*dados).exibir_dados()
             else:
-                aluno_obj = aluno(*dados)
-                aluno_obj.exibir_dados()
+                print("Nao encontrado.")
 
         elif opcao == "3":
-            matricula = input("Matricula do aluno: ").strip()
-            if not matricula:
-                print("Matricula nao pode ser vazia.")
-                continue
-            atual = database.buscar_aluno(matricula)
-            if not atual:
-                print("Nenhum aluno encontrado.")
-                continue
-            nome = input("Novo nome: ").strip()
-            email = input("Novo email: ").strip()
-            coef = input("Novo coeficiente de rendimento: ").strip()
-            if not nome or not email or not coef:
-                print("Campos nao podem ser vazios.")
-                continue
             try:
-                coef_valor = float(coef)
-            except ValueError:
-                print("Coeficiente deve ser numerico.")
-                continue
-            linhas = database.atualizar_aluno(nome, email, coef_valor, matricula)
-            if linhas:
-                print("Dados do aluno atualizados.")
-            else:
-                print("Nada foi atualizado.")
+                database.atualizar_aluno(
+                    input("Novo nome: "),
+                    input("Novo email: "),
+                    float(input("Novo coeficiente: ")),
+                    input("Matricula: "),
+                )
+                print("Aluno atualizado.")
+            except Exception as e:
+                print("Erro ao atualizar:", e)
 
         elif opcao == "4":
-            matricula = input("Matricula do aluno: ").strip()
-            if not matricula:
-                print("Matricula nao pode ser vazia.")
-                continue
-            linhas = database.deletar_aluno(matricula)
-            if linhas:
-                print("Aluno removido (membro permanece cadastrado).")
-            else:
-                print("Nenhum aluno encontrado.")
+            database.deletar_aluno(input("Matricula: "))
+            print("Aluno removido (membro permanece).")
 
         elif opcao == "5":
             break
-        else:
-            print("Opcao invalida, tente de novo.")
 
 
 def menu_professores():
     while True:
-        print("\n1 - Cadastrar professor")
-        print("2 - Ver um professor")
-        print("3 - Atualizar professor")
-        print("4 - Deletar professor")
-        print("5 - Voltar")
-        opcao = input("Opcao: ").strip()
+        print("\n1 - Cadastrar professor\n2 - Ver um professor\n3 - Atualizar professor\n4 - Deletar professor\n5 - Voltar")
+        opcao = input("Opcao: ")
 
         if opcao == "1":
-            matricula = input("Matricula: ").strip()
-            departamento = input("Departamento: ").strip()
-            titulacao = input("Titulacao: ").strip()
-            salario = input("Salario: ").strip()
-            if (
-                not matricula
-                or not departamento
-                or not titulacao
-                or not salario
-            ):
-                print("Preencha todos os campos.")
-                continue
             try:
-                salario_valor = float(salario)
-            except ValueError:
-                print("Salario deve ser numerico.")
-                continue
-            try:
-                if not database.buscar_membro(matricula):
-                    print("Cadastre primeiro o membro com essa matricula.")
-                    continue
                 database.criar_professor(
-                    matricula, departamento, titulacao, salario_valor
+                    input("Matricula: "),
+                    input("Departamento: "),
+                    input("Titulacao: "),
+                    float(input("Salario: ")),
                 )
-                print("Professor salvo com sucesso (dados herdados do membro).")
-            except sqlite3.IntegrityError:
-                print("Ja existe um professor com essa matricula ou membro nao existe.")
+                print("Professor salvo.")
+            except Exception as e:
+                print("Erro ao salvar:", e)
 
         elif opcao == "2":
-            matricula = input("Matricula do professor: ").strip()
-            if not matricula:
-                print("Matricula nao pode ser vazia.")
-                continue
-            dados = database.buscar_professor(matricula)
-            if not dados:
-                print("Nenhum professor encontrado.")
+            dados = database.buscar_professor(input("Matricula: "))
+            if dados:
+                professor(*dados).exibir_dados()
             else:
-                prof = professor(*dados)
-                prof.exibir_dados()
+                print("Nao encontrado.")
 
         elif opcao == "3":
-            matricula = input("Matricula do professor: ").strip()
-            if not matricula:
-                print("Matricula nao pode ser vazia.")
-                continue
-            atual = database.buscar_professor(matricula)
-            if not atual:
-                print("Nenhum professor encontrado.")
-                continue
-            nome = input("Novo nome: ").strip()
-            email = input("Novo email: ").strip()
-            departamento = input("Novo departamento: ").strip()
-            titulacao = input("Nova titulacao: ").strip()
-            salario = input("Novo salario: ").strip()
-            if (
-                not nome
-                or not email
-                or not departamento
-                or not titulacao
-                or not salario
-            ):
-                print("Campos nao podem ser vazios.")
-                continue
             try:
-                salario_valor = float(salario)
-            except ValueError:
-                print("Salario deve ser numerico.")
-                continue
-            linhas = database.atualizar_professor(
-                nome, email, departamento, titulacao, salario_valor, matricula
-            )
-            if linhas:
-                print("Dados do professor atualizados.")
-            else:
-                print("Nada foi atualizado.")
+                database.atualizar_professor(
+                    input("Novo nome: "),
+                    input("Novo email: "),
+                    input("Novo departamento: "),
+                    input("Nova titulacao: "),
+                    float(input("Novo salario: ")),
+                    input("Matricula: "),
+                )
+                print("Professor atualizado.")
+            except Exception as e:
+                print("Erro ao atualizar:", e)
 
         elif opcao == "4":
-            matricula = input("Matricula do professor: ").strip()
-            if not matricula:
-                print("Matricula nao pode ser vazia.")
-                continue
-            linhas = database.deletar_professor(matricula)
-            if linhas:
-                print("Professor removido (membro permanece cadastrado).")
-            else:
-                print("Nenhum professor encontrado.")
+            database.deletar_professor(input("Matricula: "))
+            print("Professor removido (membro permanece).")
 
         elif opcao == "5":
             break
-        else:
-            print("Opcao invalida, tente de novo.")
 
 
 def menu_disciplinas():
     while True:
-        print("\n1 - Cadastrar disciplina")
-        print("2 - Ver uma disciplina")
-        print("3 - Atualizar disciplina")
-        print("4 - Deletar disciplina")
-        print("5 - Voltar")
-        opcao = input("Opcao: ").strip()
+        print("\n1 - Cadastrar disciplina\n2 - Ver uma disciplina\n3 - Atualizar disciplina\n4 - Deletar disciplina\n5 - Voltar")
+        opcao = input("Opcao: ")
 
         if opcao == "1":
-            codigo = input("Codigo: ").strip()
-            descricao = input("Descricao: ").strip()
-            periodo = input("Periodo: ").strip()
-            carga = input("Carga horaria: ").strip()
-            nome = input("Nome da disciplina: ").strip()
-            if not codigo or not descricao or not periodo or not carga or not nome:
-                print("Preencha todos os campos.")
-                continue
-            try:
-                carga_valor = int(carga)
-            except ValueError:
-                print("Carga horaria deve ser numerica.")
-                continue
             try:
                 database.criar_disciplina(
-                    codigo, descricao, periodo, carga_valor, nome
+                    input("Codigo: "),
+                    input("Descricao: "),
+                    input("Periodo: "),
+                    int(input("Carga horaria: ")),
+                    input("Nome da disciplina: "),
                 )
-                print("Disciplina salva com sucesso.")
-            except sqlite3.IntegrityError:
-                print("Ja existe uma disciplina com esse codigo.")
+                print("Disciplina salva.")
+            except Exception as e:
+                print("Erro ao salvar:", e)
 
         elif opcao == "2":
-            codigo = input("Codigo da disciplina: ").strip()
-            if not codigo:
-                print("Codigo nao pode ser vazio.")
-                continue
-            dados = database.buscar_disciplina(codigo)
-            if not dados:
-                print("Nenhuma disciplina encontrada.")
+            dados = database.buscar_disciplina(input("Codigo: "))
+            if dados:
+                disciplina(*dados).exibir_dados()
             else:
-                disc = disciplina(*dados)
-                disc.exibir_dados()
+                print("Nao encontrada.")
 
         elif opcao == "3":
-            codigo = input("Codigo da disciplina: ").strip()
-            if not codigo:
-                print("Codigo nao pode ser vazio.")
-                continue
-            atual = database.buscar_disciplina(codigo)
-            if not atual:
-                print("Nenhuma disciplina encontrada.")
-                continue
-            descricao = input("Nova descricao: ").strip()
-            periodo = input("Novo periodo: ").strip()
-            carga = input("Nova carga horaria: ").strip()
-            nome = input("Novo nome: ").strip()
-            if not descricao or not periodo or not carga or not nome:
-                print("Campos nao podem ser vazios.")
-                continue
             try:
-                carga_valor = int(carga)
-            except ValueError:
-                print("Carga horaria deve ser numerica.")
-                continue
-            linhas = database.atualizar_disciplina(
-                codigo, descricao, periodo, carga_valor, nome
-            )
-            if linhas:
+                database.atualizar_disciplina(
+                    input("Codigo: "),
+                    input("Nova descricao: "),
+                    input("Novo periodo: "),
+                    int(input("Nova carga horaria: ")),
+                    input("Novo nome: "),
+                )
                 print("Disciplina atualizada.")
-            else:
-                print("Nada foi atualizado.")
+            except Exception as e:
+                print("Erro ao atualizar:", e)
 
         elif opcao == "4":
-            codigo = input("Codigo da disciplina: ").strip()
-            if not codigo:
-                print("Codigo nao pode ser vazio.")
-                continue
-            linhas = database.deletar_disciplina(codigo)
-            if linhas:
-                print("Disciplina removida.")
-            else:
-                print("Nenhuma disciplina encontrada.")
+            database.deletar_disciplina(input("Codigo: "))
+            print("Disciplina removida.")
 
         elif opcao == "5":
             break
-        else:
-            print("Opcao invalida, tente de novo.")
 
 
 def menu():
@@ -357,12 +181,8 @@ def menu():
     print("Escolha uma opcao e siga as instrucoes.")
 
     while True:
-        print("\n1 - Membros")
-        print("2 - Alunos")
-        print("3 - Professores")
-        print("4 - Disciplinas")
-        print("5 - Sair")
-        opcao = input("Opcao: ").strip()
+        print("\n1 - Membros\n2 - Alunos\n3 - Professores\n4 - Disciplinas\n5 - Sair")
+        opcao = input("Opcao: ")
 
         if opcao == "1":
             menu_membros()
