@@ -1,7 +1,5 @@
 import sqlite3
-
 conn = sqlite3.connect("universidade.db")
-
 
 def init_db():
     conn.execute(
@@ -90,11 +88,11 @@ def buscar_aluno(matricula):
 
 
 def atualizar_aluno(nome, email, coeficiente_rendimento, matricula):
-    conn.executescript(
-        f"""
-        UPDATE membro_universidade SET nome = '{nome}', email = '{email}' WHERE matricula = '{matricula}';
-        UPDATE aluno SET coeficiente_rendimento = {coeficiente_rendimento} WHERE matricula = '{matricula}';
-        """
+    conn.execute(
+        f"UPDATE membro_universidade SET nome = '{nome}', email = '{email}' WHERE matricula = '{matricula}'"
+    )
+    conn.execute(
+        f"UPDATE aluno SET coeficiente_rendimento = {coeficiente_rendimento} WHERE matricula = '{matricula}'"
     )
     conn.commit()
 
@@ -119,11 +117,12 @@ def buscar_professor(matricula):
 
 
 def atualizar_professor(nome, email, departamento, titulacao, salario, matricula):
-    conn.executescript(
-        f"""
-        UPDATE membro_universidade SET nome = '{nome}', email = '{email}' WHERE matricula = '{matricula}';
-        UPDATE professor SET departamento = '{departamento}', titulacao = '{titulacao}', salario = {salario} WHERE matricula = '{matricula}';
-        """
+    conn.execute(
+        f"UPDATE membro_universidade SET nome = '{nome}', email = '{email}' WHERE matricula = '{matricula}'"
+    )
+    conn.execute(
+        f"UPDATE professor SET departamento = '{departamento}', titulacao = '{titulacao}', salario = {salario} "
+        f"WHERE matricula = '{matricula}'"
     )
     conn.commit()
 
